@@ -1,0 +1,74 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link href="{% static 'mdeditor/css/editormd.min.css' %}" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link href="{% static 'mdeditor/css/editormd.preview.css' %}" rel="stylesheet">
+    </head>
+    <body>
+    <div> name: {{ article.title }}</div>
+        <div  class="pp-blog-details">
+
+
+        <div id="content"><textarea>{{ article.body }}</textarea></div>
+        {#  {{ article.content_test }}#}
+    <div id="child1" class="toc toc-right js-toc relative z-1 transition--300 absolute pa4 is-position-fixed"
+         style="display:block; top: 10px;right: 5px;width: 16%; font-size: 10px; float: right" ;></div>
+
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <script>
+        console.log("123")
+        tocbot.init({
+            // Where to render the table of contents.
+            tocSelector: '.js-toc',
+            // Where to grab the headings to build the table of contents.
+            contentSelector: '.pp-blog-details',
+            {#contentSelector: '.toc',#}
+            // Which headings to grab inside of the contentSelector element.
+            headingSelector: 'h3, h4, h5',
+            // For headings inside relative or absolute positioned containers within content.
+            hasInnerContainers: true,
+        });
+        console.log("12ddd3")
+    </script>
+
+    <script src="{% static 'mdeditor/js/jquery.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/editormd.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/marked.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/prettify.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/raphael.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/underscore.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/flowchart.min.js' %}"></script>
+    <script src="{% static 'mdeditor/js/lib/jquery.flowchart.min.js' %}"></script>
+    <script>
+        $(function () {
+            // js 解析markdown
+            editormd.markdownToHTML("content", {
+                //htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji: true,
+                taskList: true,
+                tex: true,  // 默认不解析
+                flowChart: true,  // 默认不解析
+                sequenceDiagram: true,  // 默认不解析
+            });
+
+            $(".reference-link").each(function (i, obj) {
+                console.log(obj)
+            })
+        })
+
+
+    </script>
+
+
+
+    </body>
+    </html>
+{% endblock %}
