@@ -68,16 +68,7 @@ WSGI_APPLICATION = 'HHblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': os.environ['DB_ROOT_PASSWD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': 3306,
-    }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
