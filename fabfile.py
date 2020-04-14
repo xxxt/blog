@@ -32,5 +32,5 @@ def deploy(c):
 
     # 重新启动应用
     with c.cd(project_root_path):
-        cmd = 'docker-compose restart'
+        cmd = 'docker-compose down && docker-compose up -d'
         c.run(cmd)
