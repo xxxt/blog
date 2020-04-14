@@ -13,13 +13,3 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': os.environ['DB_ROOT_PASSWD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': 3306,
-    }
-}

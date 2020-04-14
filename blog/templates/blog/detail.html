@@ -4,7 +4,6 @@
 
 {% block content %}
 
-
     <link href="https://cdn.bootcss.com/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 
@@ -23,15 +22,18 @@
                                aria-hidden="true"></i><span>{{ article.created_time }}</span></li>
                         {% for category in article.category.all %}
                             <li><i class="fa fa-navicon" aria-hidden="true"></i><span><a
-                                    href="{% url 'blog:category' category.id %}"><span>{{ category.name }}</span></a></span></li>
+                                    href="{% url 'blog:category' category.id %}"><span>{{ category.name }}</span></a></span>
+                            </li>
                             <li><i class="fa fa-comments" aria-hidden="true"></i><span><a
                                     href="#"><span>{{ category.name }}</span></a></span></li>
-                            <li><i class="fa fa-eye" aria-hidden="true"></i><span><a
-                                    href="#"><span>{{ text.visiting }}</span></a></span></li>
 
                         {% endfor %}
+                        <li><i class="fa fa-eye" aria-hidden="true"></i><span><a
+                                href="#"><span>{{ article.visiting }}</span></a></span></li>
+
+
                         <li><i class="fa fa-tags" aria-hidden="true"></i>{% for tag in article.tags.all %}
-                            <a href="#">{{ tag.name }}  </a>{% endfor %}</li>
+                            <a href="#">{{ tag.name }}. </a>{% endfor %}</li>
 
 
                         <li><i class="fa fa-user-circle" aria-hidden="true"></i><a href="#">Admin</a></li>
@@ -45,7 +47,7 @@
             </p>
 
             <div id="child1" class="toc toc-right js-toc relative z-1 transition--300 absolute pa4 is-position-fixed"
-                 style="display:block; top: 10px;right: 5px;width: 16%; font-size: 10px; float: right" ;></div>
+                 style="display:block; top: 22.4rem;right: 8%;width: 16%; font-size: 10px; float: right" ;></div>
         </div>
     </div>
 
@@ -72,8 +74,18 @@
             // Which headings to grab inside of the contentSelector element.
             headingSelector: 'h1, h2, h3, h4, h5',
             // For headings inside relative or absolute positioned containers within content.
-            hasInnerContainers: true,
+            hasInnerContainers: true
         });
+
+
+        window.onscroll = function () {
+            var scrollTop = document.documentElement.scrollTop;
+            var child1 = document.getElementById("child1")
+            child1.style.top = 10 + 'px';
+            {#alert(document.documentElement.scrollTop||document.body.scrollTop)#}
+        }
+
+
     </script>
 
 {% endblock %}
