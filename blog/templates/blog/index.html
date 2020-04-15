@@ -2,12 +2,25 @@
 {% load static %}
 
 <div class="pp-section pp-container-readable">
-    {% block content %}
 
+    {% block content %}
+<h1>{{ texts.q }}asdf{{ request.q }}</h1>
+                                {% if q %}
+                            {% if texts %}
+                                <h4><span style="color: red">"{{ q }}"</span>的搜索结果如下：</h4>
+                                <hr>
+                                <h1>dddd{{ text.q }}{{ q }}</h1>
+                            {% else %}
+                                <h4>暂无<span style="color: red">"{{ texts.q }}"</span>有关的文章。</h4>
+                                <hr>
+                            {% endif %}
+                        {% endif %}
         {% for text in texts %}
 
 
-            <article class="pp-post"><a href="/detail/{{ text.id }}">
+
+
+            <article class="pp-post"><a href="{% url 'blog:details'  text.id %}">
                 {% if text.img %}
                     <img class="img-fluid"
                          src="/uploads/{{ text.img }}"
@@ -16,14 +29,17 @@
 
             </a>
                 <header class="pp-post-header">
-                    <div class="pp-post-title"><a class="h4" href="/detail/{{ text.id }}">{{ text.title }}</a></div>
+                    <div class="pp-post-title"><a class="h4"
+                                                  href="{% url 'blog:details'  text.id %}">{{ text.title }}</a></div>
                     <div class="pp-post-meta">
+
                         <ul>
                             <li><i class="fa fa-calendar-check-o"
                                    aria-hidden="true"></i><span>{{ text.created_time }}</span></li>
                             {% for category in text.category.all %}
                                 <li><i class="fa fa-navicon" aria-hidden="true"></i><span><a
-                                        href="{% url 'blog:category' category.id %}"><span>{{ category.name }}</span></a></span></li>
+                                        href="{% url 'blog:category' category.id %}"><span>{{ category.name }}</span></a></span>
+                                </li>
                                 <li><i class="fa fa-comments" aria-hidden="true"></i><span><a
                                         href="#"><span>{{ category.name }}</span></a></span></li>
                                 <li><i class="fa fa-eye" aria-hidden="true"></i><span><a
@@ -31,7 +47,7 @@
 
                             {% endfor %}
                             <li><i class="fa fa-tags" aria-hidden="true"></i>{% for tag in text.tags.all %}
-                                <a href="#">{{ tag.name }}.  </a>{% endfor %}</li>
+                                <a href="#">{{ tag.name }}. </a>{% endfor %}</li>
 
                         </ul>
                     </div>
@@ -42,7 +58,7 @@
                 <div class="pp-post-read-more"><a href="{% url 'blog:detail' text.id %}">Read More</a></div>
             </article>
         {% empty %}
-            <h1>adsfadsfa</h1>
+            <h1>没有内容</h1>
         {% endfor %}
 
     {% endblock %}

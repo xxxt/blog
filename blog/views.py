@@ -1,7 +1,9 @@
 import re
 
 import markdown
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
 from django.views.generic import ListView
 from markdown.extensions.toc import TocExtension
@@ -53,6 +55,7 @@ def detail(request, pk):
 
 def details(request, pk):
     article = get_object_or_404(Blog, pk=pk)
+    article.increase_visiting()
     return render(request, 'blog/test.html', context={'article': article})
 
 
@@ -102,4 +105,33 @@ class TagsView(IndexBaseView):
             return context
 
 
+def search(request):
+    q = request.GET.get('q')
+
+    if not q:
+        error_msg = "请输入搜索关键词"
+        messages.add_message(request, messages.ERROR, error_msg, extra_tags='danger')
+        return redirect('blog:index')
+
+    post_list = Blog.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
+    return render(request, 'blog/index.html', {'texts': post_list, 'q': q})
+
+
+class SearchView(IndexBaseView):
+    # def get_context_data(self, **kwargs):
+    #     q = self.request.GET.get('q')
+    #     context = super(SearchView, self).get_context_data(**kwargs)
+    #     context['q'] = q
+    #     return context
+
+    def get_queryset(self):
+        q = self.request.GET.get('q')
+        if not q:
+            error_msg = "请输入搜索关键词"
+            messages.add_message(self.request, messages.ERROR, error_msg, extra_tags='danger')
+            return redirect('blog:index')
+
+        texts = Blog.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
+
+        return texts
 
