@@ -22,7 +22,7 @@ urlpatterns = [
     path('create/', views.article_create, name='create'),
     # url(r'create/', views.article_create, name='create'),
     path('login/', views.login, name='login'),
-    path('register/', views.register),
+    path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
     path('captcha/', views.get_captcha),
 ]
