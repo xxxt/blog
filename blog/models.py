@@ -1,5 +1,5 @@
 import markdown
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
@@ -7,6 +7,20 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import strip_tags
 from mdeditor.fields import MDTextField
+
+
+class User(models.Model):
+
+    no = models.AutoField(primary_key=True, verbose_name='编号')
+    username = models.CharField(max_length=20, unique=True, verbose_name='用户名')
+    password = models.CharField(max_length=32, verbose_name='用户密码')
+    email = models.EmailField(max_length=255, default='', blank=True, verbose_name='邮箱')
+    tel = models.CharField(max_length=11, verbose_name='手机号')
+
+    class Meta:
+        db_table = 'tb_user'
+        verbose_name = '用户'
+        verbose_name_plural = verbose_name
 
 
 class Category(models.Model):
@@ -40,7 +54,7 @@ class Tag(models.Model):
 class Blog(models.Model):
 
     title = models.CharField(max_length=1024, verbose_name='标题')
-    author = models.ForeignKey(User, default='xx', verbose_name='作者', on_delete=models.CASCADE)
+    author = models.ForeignKey(to=User, default='xx', verbose_name='作者', on_delete=models.CASCADE)
     img = models.ImageField(upload_to='blog_img', null=True, blank=True, verbose_name='博客图片')
     body = MDTextField(verbose_name='正文')
     abstract = models.TextField(max_length=256, null=True, blank=True, verbose_name='摘要')
@@ -78,14 +92,3 @@ class Blog(models.Model):
         super().save(*args, **kwargs)
 
 
-class User(models.Model):
-
-    no = models.AutoField(primary_key=True, verbose_name='编号')
-    username = models.CharField(max_length=20, unique=True, verbose_name='用户名')
-    password = models.CharField(max_length=32, verbose_name='用户密码')
-    email = models.EmailField(max_length=255, default='', blank=True, verbose_name='邮箱')
-
-    class Meta:
-        db_table = 'tb_user'
-        verbose_name = '用户'
-        verbose_name_plural = verbose_name

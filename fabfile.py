@@ -34,3 +34,4 @@ def deploy(c):
     with c.cd(project_root_path):
         cmd = 'docker-compose down && docker-compose up -d'
         c.run(cmd)
+

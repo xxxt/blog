@@ -65,6 +65,22 @@
                             aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <ul class="navbar-nav ml-auto">
+
+                            <li class="nav-item">
+                                <div class="row">
+                                    <div class="col-auto mr-auto" style="padding-top: 4px">
+                                        <form class="form-inline" action="{% url 'blog:search' %}">
+                                            <label class="sr-only">content</label>
+                                            <input type="text"
+                                                   class="form-control mb-2 mr-sm-2"
+                                                   name="q"
+                                                   placeholder="搜索文章..."
+                                                   required
+                                            >
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
                             <li class="nav-item {% if request.resolver_match.url_name == 'index' %} active {% endif %} ">
                                 <a class="nav-link" href="{% url 'blog:index' %}">主页</a>
                             </li>
@@ -79,30 +95,25 @@
                             </li>
                             <li class="nav-item {% if request.resolver_match.url_name == '' %} active {% endif %}"><a
                                     class="nav-link" href="#">关于</a></li>
-                            <li class="nav-item">
-                                                                <form role="search" method="get" id="searchform" action="{% url 'blog:search' %}">
-                                                                    <input type="search" name="q" placeholder="搜索" required>
-                                                                    <button type="submit"><span class="ion-ios-search-strong"></span></button>
-                                                                </form>
-{#                                <div class="row">#}
-{#                                    <div class="col-auto mr-auto">#}
-{#                                        <form class="form-inline" action="{% url 'blog:search' %}">#}
-{#                                            <label class="sr-only">content</label>#}
-{#                                            <input type="text"#}
-{#                                                   class="form-control mb-2 mr-sm-2"#}
-{#                                                   name="q"#}
-{#                                                   placeholder="搜索文章..."#}
-{#                                                   required#}
-{#                                            >#}
-{#                                        </form>#}
-{#                                    </div>#}
-{#                                </div>#}
+                            <li class="nav-item {% if request.resolver_match.url_name == 'create' %} active {% endif %} ">
+                                <a class="nav-link" href="{% url 'blog:create' %}">发布</a></li>
+                            <li class="nav-item {% if request.resolver_match.url_name == 'login' %} active {% endif %} ">
+                                <a class="nav-link" href="{% url 'blog:login' %}">
+                                    {% if request.session.username %}
+                                        {{ request.session.username }}
+                                    {% else %}
+                                        登录
+                                    {% endif %}
+                                </a>
                             </li>
+                            <li class="nav-item {% if request.resolver_match.url_name == 'louout' %} active {% endif %} ">
+                                <a class="nav-link" href="{% url 'blog:logout' %}">注销</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
+        <link href="blog/images/favicon.png" rel="icon" type="image/x-ico">
     </header>
     <div class="page-content">
 
@@ -182,7 +193,8 @@
                         {#            小于4页的分页形式#}
                         {% if page_obj.paginator.num_pages <= 4 %}
                             {% for num in page_obj.paginator.page_range %}
-                                <li><a {% if num == page_obj.number %} style="color: black" {% endif %} href="?page={{ num }}">{{ num }}</a></li>
+                                <li><a {% if num == page_obj.number %} style="color: black" {% endif %}
+                                                                       href="?page={{ num }}">{{ num }}</a></li>
                             {% endfor %}
                         {% endif %}
                         {% if page_obj.has_next %}

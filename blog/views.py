@@ -1,17 +1,23 @@
 import re
 
 import markdown
+import requests
 from django.contrib import messages
 from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
 from django.views.generic import ListView
 from markdown.extensions.toc import TocExtension
+from blog.forms import RegisterForm, LoginForm, TEL_PATTERN
+from blog.utils import generate_captcha_code, generate_mobile_code
+from blog.captcha import Captcha
 # 分页插件pure_pagination
 # from pure_pagination import PaginationMixin
 
 # Create your views here.
-from blog.models import Blog, Tag, Category
+from blog.models import Blog, Tag, Category, User
+from  blog.forms import BlogPostForm
 
 from django.db.models.aggregates import Count
 
@@ -134,4 +140,117 @@ class SearchView(IndexBaseView):
         texts = Blog.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))
 
         return texts
+
+
+def article_create(request):
+    if request.method == "POST":
+        article_post_form = BlogPostForm(data=request.POST)
+        if article_post_form.is_valid():
+            new_article = article_post_form.save(commit=False)
+            new_article.author = User.objects.get(no=request.session['userid'])
+            # new_article.category = '技术'
+            # new_article.tags = '网络'
+            new_article.save()
+            return redirect('blog:index')
+        else:
+            return HttpResponse("表单内容有误，请重新填写。")
+    else:
+        article_post_form = BlogPostForm()
+        context = {'article_post_form': article_post_form}
+        return render(request, 'blog/create.html', context)
+
+
+def get_mobile_code(request):
+    """获得手机验证码"""
+    tel = request.GET.get('tel')
+    if TEL_PATTERN.fullmatch(tel):
+        code = generate_mobile_code()
+        request.session['mobile_code'] = code
+        resp = requests.post(
+            url='http://sms-api.luosimao.com/v1/send.json',
+            auth=('api', 'key-6d2417156fefbd9c0e78fae069a34580'),
+            data={
+                'mobile': tel,
+                'message': f'您的短信验证码是{code}，打死也不能告诉别人。【Python小课】',
+            },
+            timeout=3,
+            verify=False
+        )
+        if json.loads(resp.text)['error'] == 0:
+            code, hint = 20001, '短信验证码发送成功'
+        else:
+            code, hint = 20002, '短信验证码发送失败，请稍后重试'
+    else:
+        code, hint = 20003, '请输入有效的手机号码'
+    return JsonResponse({'code': code, 'hint': hint})
+
+
+def register(request):
+    """用户注册"""
+    hint = ''
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            code_from_session = '123456'  # request.session.get('mobile_code')
+            code_from_user = form.cleaned_data['code']
+            if code_from_session == code_from_user:
+                form.save()
+                hint = '注册成功，请登录!'
+                return render(request, 'blog/login.html', {'hint': hint})
+            else:
+                hint = '请输入正确的手机验证码'
+        else:
+            hint = '请输入有效的注册信息'
+    return render(request, 'blog/register.html', {'hint': hint})
+
+
+def login(request):
+    """用户登录"""
+    hint = ''
+    backurl = request.GET.get('backurl', '/')
+    if request.method == 'POST':
+        backurl = request.POST['backurl']
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            code_from_session = request.session.get('captcha_code')
+            code_from_user = form.cleaned_data['code']
+            if code_from_session.lower() == code_from_user.lower():
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user = User.objects.filter(
+                    username=username, password=password).first()
+                if user:
+                    request.session['userid'] = user.no
+                    request.session['username'] = user.username
+                    return redirect(backurl)
+                else:
+                    hint = '用户名或密码错误'
+            else:
+                hint = '请输入正确的验证码'
+        else:
+            hint = '请输入有效的登录信息'
+    return render(request, 'blog/login.html', {'hint': hint, 'backurl': backurl})
+
+
+def get_captcha(request):
+    """生成图片验证码"""
+    code = generate_captcha_code()
+    request.session['captcha_code'] = code
+    image_data = Captcha.instance().generate(code, fmt='PNG')
+    return HttpResponse(image_data, content_type='image/png')
+
+
+def logout(request):
+    """用户注销"""
+    request.session.flush()
+    return redirect('blog:index')
+
+
+
+# TODO
+#  login
+#  register
+#  test
+#  cache
+#
 

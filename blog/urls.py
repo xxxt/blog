@@ -13,12 +13,18 @@ urlpatterns = [
     url(r'mdeditor/', include('mdeditor.urls')),
     path('show_archives/', views.archives, name='archives'),
     path('archives/<int:year>/<int:month>/', views.ArchivesView.as_view(), name='archive'),
-    path('show_categories', views.categories, name='categories'),
+    path('show_categories/', views.categories, name='categories'),
     path('categories/<int:pk>/', views.CategoriesView.as_view(), name='category'),
-    path('show_tages', views.tags, name='tags'),
+    path('show_tages/', views.tags, name='tags'),
     path('tag/<int:pk>', views.TagsView.as_view(), name='tag'),
     # path('search', views.SearchView.as_view(), name='search'),
-    path('search', views.search, name='search')
+    path('search/', views.search, name='search'),
+    path('create/', views.article_create, name='create'),
+    # url(r'create/', views.article_create, name='create'),
+    path('login/', views.login, name='login'),
+    path('register/', views.register),
+    path('logout/', views.logout, name='logout'),
+    path('captcha/', views.get_captcha),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

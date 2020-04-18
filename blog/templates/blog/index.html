@@ -4,17 +4,16 @@
 <div class="pp-section pp-container-readable">
 
     {% block content %}
-<h1>{{ texts.q }}asdf{{ request.q }}</h1>
-                                {% if q %}
-                            {% if texts %}
-                                <h4><span style="color: red">"{{ q }}"</span>的搜索结果如下：</h4>
-                                <hr>
-                                <h1>dddd{{ text.q }}{{ q }}</h1>
-                            {% else %}
-                                <h4>暂无<span style="color: red">"{{ texts.q }}"</span>有关的文章。</h4>
-                                <hr>
-                            {% endif %}
-                        {% endif %}
+        {% if q %}
+            {% if texts %}
+                <h4><span style="color: red">"{{ q }}"</span>的搜索结果如下：</h4>
+                <hr>
+                <h1>{{ q }}{{ q }}</h1>
+            {% else %}
+                <h4>暂无<span style="color: red">"{{ q }}"</span>有关的文章。</h4>
+                <hr>
+            {% endif %}
+        {% endif %}
         {% for text in texts %}
 
 
