@@ -28,16 +28,16 @@
                                     href="#"><span>{{ category.name }}</span></a></span></li>
 
                         {% endfor %}
-                        <li><i class="fa fa-eye" aria-hidden="true"></i><span><a
-                                href="#"><span>{{ article.visiting }}</span></a></span></li>
+                        <li><i class="fa fa-eye" aria-hidden="true"></i><span>
+                            <a href="#"><span>{{ article.visiting }}</span></a></span></li>
 
 
                         <li><i class="fa fa-tags" aria-hidden="true"></i>{% for tag in article.tags.all %}
                             <a href="#">{{ tag.name }}. </a>{% endfor %}</li>
 
 
-                        <li><i class="fa fa-user-circle" aria-hidden="true"></i><a
-                                href="#">{{ article.author.name }}</a></li>
+                        <li><i class="fa fa-user-circle" aria-hidden="true"></i><span>
+                            <a href="#"><span>{{ article.author.name }}</span></a></span></li>
                     </ul>
                 </div>
                 {#          <img class="img-fluid mt-3" src="images/blog-4.jpg" alt="Blog Image"/>#}
