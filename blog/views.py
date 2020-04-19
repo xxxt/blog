@@ -165,7 +165,6 @@ def article_create(request):
         return render(request, 'blog/create.html', context)
 
 
-
 def get_mobile_code(request):
     """获得手机验证码"""
     tel = request.GET.get('tel')
@@ -254,8 +253,7 @@ def logout(request):
 
 
 # TODO
-#  login
-#  register
+#  add categroy in UI
 #  test
 #  cache
 #
