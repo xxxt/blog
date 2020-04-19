@@ -1,5 +1,5 @@
 import re
-
+import json
 import markdown
 import requests
 from django.contrib import messages
@@ -8,6 +8,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
 from django.views.generic import ListView
+from django.views.generic.base import View
 from markdown.extensions.toc import TocExtension
 from blog.forms import RegisterForm, LoginForm, TEL_PATTERN
 from blog.utils import generate_captcha_code, generate_mobile_code
@@ -17,7 +18,7 @@ from blog.captcha import Captcha
 
 # Create your views here.
 from blog.models import Blog, Tag, Category, User
-from  blog.forms import BlogPostForm
+from  blog.forms import BlogPostForm, MDEditorForm
 
 from django.db.models.aggregates import Count
 
@@ -145,9 +146,12 @@ class SearchView(IndexBaseView):
 def article_create(request):
     if request.method == "POST":
         article_post_form = BlogPostForm(data=request.POST)
+        content_form = MDEditorForm(request.POST)
         if article_post_form.is_valid():
             new_article = article_post_form.save(commit=False)
             new_article.author = User.objects.get(no=request.session['userid'])
+            if request.POST['column'] != 'none':
+                new_article.column = Category.objects.get(id=request.POST['column'])
             # new_article.category = '技术'
             # new_article.tags = '网络'
             new_article.save()
@@ -156,8 +160,10 @@ def article_create(request):
             return HttpResponse("表单内容有误，请重新填写。")
     else:
         article_post_form = BlogPostForm()
-        context = {'article_post_form': article_post_form}
+        categories = Category.objects.all()
+        context = {'article_post_form': article_post_form, 'categories': categories}
         return render(request, 'blog/create.html', context)
+
 
 
 def get_mobile_code(request):

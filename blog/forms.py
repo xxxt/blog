@@ -1,5 +1,5 @@
 from django import forms
-
+from mdeditor.fields import MDTextFormField
 from blog.models import Blog, User
 
 import hashlib
@@ -14,12 +14,13 @@ from django.core.exceptions import ValidationError
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = ('title', 'body')
+        fields = '__all__'
 
 
-# class MDEditorForm(forms.Form):
-#     name = forms.CharField()
-#     content = MDTextFormField()
+class MDEditorForm(forms.Form):
+    name = forms.CharField()
+    content = MDTextFormField()
+
 
 USERNAME_PATTERN = re.compile(r'\w{6,20}')
 TEL_PATTERN = re.compile(r'1[3-9]\d{9}')

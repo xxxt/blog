@@ -54,7 +54,7 @@
                 <div class="pp-post-content">
                     <p>{{ text.abstract | safe }}</p>
                 </div>
-                <div class="pp-post-read-more"><a href="{% url 'blog:detail' text.id %}">Read More</a></div>
+                <div class="pp-post-read-more"><a href="{% url 'blog:details' text.id %}">Read More</a></div>
             </article>
         {% empty %}
             <h1>没有内容</h1>

@@ -2,13 +2,13 @@
 
 {% block content %}
 
-{##}
-{#        <form method="post" action="./">#}
-{#            {% csrf_token %}#}
-{#            {{ form.media }}#}
-{#            {{ form.as_p }}#}
-{#            <p><input type="submit" value="post"></p>#}
-{#        </form>#}
+    {##}
+    {#        <form method="post" action="./">#}
+    {#            {% csrf_token %}#}
+    {#            {{ form.media }}#}
+    {#            {{ form.as_p }}#}
+    {#            <p><input type="submit" value="post"></p>#}
+    {#        </form>#}
 
 
     <div class="container">
@@ -26,6 +26,17 @@
                         <!-- 文本框 -->
                         <input type="text" class="form-control" id="title" name="title">
                     </div>
+
+                    <select class="form-control"
+                            id="column"
+                            name="column"
+                    >
+                        <option value="none">请选择栏目..</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+
                     <!-- 文章正文 -->
                     <div class="form-group">
                         <label for="body">文章正文</label>

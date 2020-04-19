@@ -20,7 +20,6 @@ urlpatterns = [
     # path('search', views.SearchView.as_view(), name='search'),
     path('search/', views.search, name='search'),
     path('create/', views.article_create, name='create'),
-    # url(r'create/', views.article_create, name='create'),
     path('login/', views.login, name='login'),
     path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
