@@ -5,4 +5,5 @@ _credentials.py
 .DS_Store
 access.log
 error.log
-*/migrations/00*.py
+migrations/*.py
+!__init__.py
