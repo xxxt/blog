@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'mdeditor',
-    # 'pure_pagination',  # 分页
+    'comments',
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'

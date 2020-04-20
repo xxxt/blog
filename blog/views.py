@@ -33,7 +33,7 @@ md = markdown.Markdown(extensions=[
 # class IndexView(PaginationMixin, ListView):
 
 
-class IndexBaseView(ListView):
+class IndexBaseView(ListView):      # 列表展示类，包含分页功能
     template_name = 'blog/index.html'
     context_object_name = 'texts'
     paginate_by = 4
