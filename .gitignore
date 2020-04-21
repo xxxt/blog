@@ -7,3 +7,4 @@ access.log
 error.log
 migrations/*.py
 !__init__.py
+!static

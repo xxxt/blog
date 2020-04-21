@@ -14,7 +14,8 @@ from django.core.exceptions import ValidationError
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = Blog
-        fields = '__all__'
+        # fields = '__all__'
+        fields = ('title', 'body', 'category')
 
 
 class MDEditorForm(forms.Form):

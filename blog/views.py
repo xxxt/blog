@@ -18,7 +18,8 @@ from blog.captcha import Captcha
 
 # Create your views here.
 from blog.models import Blog, Tag, Category, User
-from  blog.forms import BlogPostForm, MDEditorForm
+from comment.models import Comment
+from blog.forms import BlogPostForm, MDEditorForm
 
 from django.db.models.aggregates import Count
 
@@ -62,8 +63,9 @@ def detail(request, pk):
 
 def details(request, pk):
     article = get_object_or_404(Blog, pk=pk)
+    comments = Comment.objects.filter(article=pk).order_by('-created')
     article.increase_visiting()
-    return render(request, 'blog/test.html', context={'article': article})
+    return render(request, 'blog/test.html', context={'article': article, 'comments': comments})
 
 
 def archives(request):
@@ -150,9 +152,9 @@ def article_create(request):
         if article_post_form.is_valid():
             new_article = article_post_form.save(commit=False)
             new_article.author = User.objects.get(no=request.session['userid'])
-            if request.POST['column'] != 'none':
-                new_article.column = Category.objects.get(id=request.POST['column'])
-            # new_article.category = '技术'
+            if request.POST['category'] != 'none':
+                new_article.column = Category.objects.get(id=request.POST['category'])
+            # new_article.category.add(Category.objects.get[])
             # new_article.tags = '网络'
             new_article.save()
             return redirect('blog:index')
@@ -251,9 +253,16 @@ def logout(request):
     return redirect('blog:index')
 
 
+class IncreaseLikesView(View):
+    def post(self, request, *args, **kwargs):
+        article = Blog.objects.get(id=kwargs.get('id'))
+        article.likes += 1
+        article.save()
+        return HttpResponse('success')
 
 # TODO
-#  add categroy in UI
+#  用户问题：评论登录状态识别、
+#  add tag in UI
 #  test
 #  cache
 #

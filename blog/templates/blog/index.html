@@ -40,9 +40,9 @@
                                         href="{% url 'blog:category' category.id %}"><span>{{ category.name }}</span></a></span>
                                 </li>
                                 <li><i class="fa fa-comments" aria-hidden="true"></i><span><a
-                                        href="#"><span>{{ category.name }}</span></a></span></li>
-                                <li><i class="fa fa-eye" aria-hidden="true"></i><span><a
-                                        href="#"><span>{{ text.visiting }}</span></a></span></li>
+                                        href="{{ text.get_absolute_url }}#comment-area"><span>评论</span></a></span></li>
+
+                                <li><i class="fa fa-eye" aria-hidden="true"></i><span><span>{{ text.visiting }}</span></span></li>
 
                             {% endfor %}
                             <li><i class="fa fa-tags" aria-hidden="true"></i>{% for tag in text.tags.all %}

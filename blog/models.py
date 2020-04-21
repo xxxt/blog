@@ -23,7 +23,8 @@ class User(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.name
+        return self.username
+
 
 class Category(models.Model):
     """分类"""
@@ -65,6 +66,7 @@ class Blog(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name='标签')
     created_time = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     modifyed_time = models.DateTimeField(auto_now=True, verbose_name='修改时间')
+    likes = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -76,7 +78,7 @@ class Blog(models.Model):
         verbose_name_plural = verbose_name
 
     def get_absolute_url(self):
-        return reverse("blog:blog_detail", kwargs={"blog_id": self.id})
+        return reverse('blog:details', args={self.id})
 
     def increase_visiting(self):
         self.visiting += 1
