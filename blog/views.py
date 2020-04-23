@@ -30,11 +30,12 @@ md = markdown.Markdown(extensions=[
     TocExtension(slugify=slugify),
 ])
 
+
 # 分页插件pure_pagination
 # class IndexView(PaginationMixin, ListView):
 
 
-class IndexBaseView(ListView):      # 列表展示类，包含分页功能
+class IndexBaseView(ListView):  # 列表展示类，包含分页功能
     template_name = 'blog/index.html'
     context_object_name = 'texts'
     paginate_by = 4
@@ -146,25 +147,34 @@ class SearchView(IndexBaseView):
 
 
 def article_create(request):
-    if request.method == "POST":
-        article_post_form = BlogPostForm(data=request.POST)
-        content_form = MDEditorForm(request.POST)
-        if article_post_form.is_valid():
-            new_article = article_post_form.save(commit=False)
-            new_article.author = User.objects.get(no=request.session['userid'])
-            if request.POST['category'] != 'none':
-                new_article.column = Category.objects.get(id=request.POST['category'])
-            # new_article.category.add(Category.objects.get[])
-            # new_article.tags = '网络'
-            new_article.save()
-            return redirect('blog:index')
+    if request.session['userid'] == 2:
+        if request.method == "POST":
+            article_post_form = BlogPostForm(data=request.POST)
+            content_form = MDEditorForm(request.POST)
+            if article_post_form.is_valid():
+                new_article = article_post_form.save(commit=False)
+                new_article.author = User.objects.get(no=request.session['userid'])
+                # if request.POST['category'] != 'none':
+                    # new_article.colum = Category.objects.get(id=request.POST['category'])
+
+                # if request.POST['tag'] != 'none':
+                #     new_article.tags = Category.objects.get(id=request.POST['tag'])
+                # new_article.category.add(Category.objects.get[])
+                # new_article.tags = '网络'
+                new_article.save()
+                new_article.category.add(Category.objects.get(id=request.POST['category']))
+                new_article.tags.add(Tag.objects.get(id=request.POST['tag']))
+                return redirect('blog:index')
+            else:
+                return HttpResponse("表单内容有误，请重新填写。")
         else:
-            return HttpResponse("表单内容有误，请重新填写。")
+            article_post_form = BlogPostForm()
+            categories = Category.objects.all()
+            tags = Tag.objects.all()
+            context = {'article_post_form': article_post_form, 'categories': categories, 'tags': tags}
+            return render(request, 'blog/create.html', context)
     else:
-        article_post_form = BlogPostForm()
-        categories = Category.objects.all()
-        context = {'article_post_form': article_post_form, 'categories': categories}
-        return render(request, 'blog/create.html', context)
+        return render(request, 'blog/create.html', {'error': '您无权发表文章'})
 
 
 def get_mobile_code(request):
@@ -260,10 +270,12 @@ class IncreaseLikesView(View):
         article.save()
         return HttpResponse('success')
 
+
+def about(request):
+    context = {'name': 'yjh'}
+    return render(request, 'blog/about.html', context)
+
 # TODO
-#  用户问题：评论登录状态识别、
-#  add tag in UI
+#  add categroy in UI
 #  test
 #  cache
-#
-

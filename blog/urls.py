@@ -25,6 +25,7 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('captcha/', views.get_captcha),
     path('increase-likes/<int:id>/', views.IncreaseLikesView.as_view(), name='increase_likes'),
+    path('about/', views.about, name='about'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

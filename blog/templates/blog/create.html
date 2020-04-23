@@ -10,44 +10,70 @@
     {#            <p><input type="submit" value="post"></p>#}
     {#        </form>#}
 
+    {% if error %}
+        <h1 style="text-align: center;">{{ error }}</h1>
+    {% else %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <br>
-                <!-- 提交文章的表单 -->
-                <form method="post" action="./">
-                    <!-- Django中需要POST数据的地方都必须有csrf_token -->
-                    {% csrf_token %}
-                    <!-- 文章标题 -->
-                    <div class="form-group">
-                        <!-- 标签 -->
-                        <label for="title">文章标题</label>
-                        <!-- 文本框 -->
-                        <input type="text" class="form-control" id="title" name="title">
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <br>
+                    <!-- 提交文章的表单 -->
+                    <form method="post" action="./">
+                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                        {% csrf_token %}
+                        <!-- 文章标题 -->
+                        <div class="form-group">
+                            <!-- 标签 -->
+                            <label for="title">文章标题</label>
+                            <!-- 文本框 -->
+                            <input type="text" class="form-control" id="title" name="title">
+                        </div>
 
-                    <select class="form-control"
-                            id="category"
-                            name="category"
-                    >
-                        <option value="none">请选择文章分类..</option>
-                        {% for category in categories %}
-                            <option value="{{ category.id }}">{{ category }}</option>
-                        {% endfor %}
-                    </select>
+                        <select class="form-control"
+                                id="category"
+                                name="category"
+                        >
+                            <option value="none">请选择文章分类..</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
 
-                    <!-- 文章正文 -->
-                    <div class="form-group">
-                        <label for="body">文章正文</label>
-                        <!-- 文本区域 -->
-                        <textarea type="text" class="form-control" id="body" name="body" rows="12"></textarea>
-                    </div>
-                    <!-- 提交按钮 -->
-                    <button type="submit" class="btn btn-primary">完成</button>
-                </form>
+                        <select class="form-control"
+                                id="tag"
+                                name="tag"
+{#                                                                multiple="multiple"#}
+{#                                                                size="1"#}
+                        >
+                            <option value="none">请选择文章标签..</option>
+                            {% for tag in tags %}
+                                <option value="{{ tag.id }}">{{ tag }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <script>
+                            $('#tag').multipleSelect({
+                                addTitle: true, //鼠标点悬停在下拉框时是否显示被选中的值
+                                selectAll: false, //是否显示全部复选框，默认显示
+                                name: "质控级别",
+                                selectAllText: "选择全部", //选择全部的复选框的text值
+                                allSelected: "全部", //全部选中后显示的值
+                                //delimiter: ', ', //多个值直接的间隔符，默认是逗号
+                                placeholder: "质控级别" //不选择时下拉框显示的内容
+                            });
+                        </script>
+                        <!-- 文章正文 -->
+                        <div class="form-group">
+                            <label for="body">文章正文</label>
+                            <!-- 文本区域 -->
+                            <textarea type="text" class="form-control" id="body" name="body" rows="12"></textarea>
+                        </div>
+                        <!-- 提交按钮 -->
+                        <button type="submit" class="btn btn-primary">完成</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
+    {% endif %}
 {% endblock %}

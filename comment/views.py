@@ -8,7 +8,7 @@ from comment.forms import CommentForm
 
 
 # 文章评论
-@login_required(login_url='/login/')
+# @login_required(login_url='/login/')
 def post_comment(request, article_id):
     article = get_object_or_404(Blog, id=article_id)
 
@@ -18,7 +18,7 @@ def post_comment(request, article_id):
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.article = article
-            new_comment.user = User.objects.get(no=2)
+            new_comment.user = User.objects.get(no=request.session['userid'])
             # new_comment.user = User.objects.get(no=request.session['userid'])
             new_comment.save()
             return redirect(article)
