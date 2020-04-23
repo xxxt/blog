@@ -8,8 +8,8 @@ app_name = 'blog'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('detail/<int:pk>', views.detail, name='detail'),
-    path('details/<int:pk>', views.details, name='details'),
+    path('detail/<int:pk>/', views.detail, name='detail'),
+    path('details/<int:pk>/', views.details, name='details'),
     url(r'mdeditor/', include('mdeditor.urls')),
     path('show_archives/', views.archives, name='archives'),
     path('archives/<int:year>/<int:month>/', views.ArchivesView.as_view(), name='archive'),

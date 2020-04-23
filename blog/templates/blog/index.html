@@ -42,10 +42,13 @@
                                 <li><i class="fa fa-comments" aria-hidden="true"></i><span><a
                                         href="{{ text.get_absolute_url }}#comment-area"><span>评论</span></a></span></li>
 
-                                <li><i class="fa fa-eye" aria-hidden="true"></i><span><span>{{ text.visiting }}</span></span></li>
+                                <li><i class="fa fa-eye"
+                                       aria-hidden="true"></i><span><span>{{ text.visiting }}</span></span></li>
 
                             {% endfor %}
-                            <li><i class="fa fa-tags" aria-hidden="true"></i>{% for tag in text.tags.all %}
+
+                            {% for tag in text.tags.all %}
+                                <li><i class="fa fa-tags" aria-hidden="true"></i>
                                 <a href="#">{{ tag.name }}. </a>{% endfor %}</li>
 
                         </ul>

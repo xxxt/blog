@@ -162,8 +162,14 @@ def article_create(request):
                 # new_article.category.add(Category.objects.get[])
                 # new_article.tags = '网络'
                 new_article.save()
-                new_article.category.add(Category.objects.get(id=request.POST['category']))
-                new_article.tags.add(Tag.objects.get(id=request.POST['tag']))
+                article_post_form.save_m2m()
+                if request.POST['category'] != 'none':
+                    new_article.category.add(get_object_or_404(Category, id=request.POST['category']))
+                # if request.POST['tag'] != 'none':
+                #     try:
+                #         new_article.tags.add(get_object_or_404(Tag, id=request.POST['tag']))
+                #     except:
+                #         pass
                 return redirect('blog:index')
             else:
                 return HttpResponse("表单内容有误，请重新填写。")
@@ -213,7 +219,8 @@ def register(request):
             if code_from_session == code_from_user:
                 form.save()
                 hint = '注册成功，请登录!'
-                return render(request, 'blog/login.html', {'hint': hint})
+                # return render(request, 'blog/login.html', {'hint': hint})
+                return redirect('blog:login')
             else:
                 hint = '请输入正确的手机验证码'
         else:
@@ -224,7 +231,7 @@ def register(request):
 def login(request):
     """用户登录"""
     hint = ''
-    backurl = request.GET.get('backurl', '/')
+    backurl = request.GET.get('backurl', 'blog:index')
     if request.method == 'POST':
         backurl = request.POST['backurl']
         form = LoginForm(request.POST)

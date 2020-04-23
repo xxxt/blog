@@ -19,20 +19,21 @@
                     <ul>
                         <li><i class="fa fa-calendar-check-o"
                                aria-hidden="true"></i><span>{{ article.created_time }}</span></li>
+                        {% for category in article.category.all %}
+                            <li><i class="fa fa-navicon" aria-hidden="true"></i><span><a
+                                href="{% url 'blog:category' category.id %}"><span> {{ category.name }}
+                            . {% endfor %}</span></a></span>
+                        </li>
 
-                            <li><i class="fa fa-navicon" aria-hidden="true"></i><span>{% for category in article.category.all %}<a
-                                    href="{% url 'blog:category' category.id %}"><span> {{ category.name }}. {% endfor %}</span></a></span>
-                            </li>
 
 
-
-                     <li><i class="fa fa-comments" aria-hidden="true"></i><span><a
-                                        href="{{ text.get_absolute_url }}#comment-area"><span>评论</span></a></span></li>
+                        <li><i class="fa fa-comments" aria-hidden="true"></i><span><a
+                                href="{{ text.get_absolute_url }}#comment-area"><span>评论</span></a></span></li>
                         <li><i class="fa fa-eye" aria-hidden="true"></i><span><a
                                 href="#"><span>{{ article.visiting }}</span></a></span></li>
 
-
-                        <li><i class="fa fa-tags" aria-hidden="true"></i>{% for tag in article.tags.all %}
+                        {% for tag in article.tags.all %}
+                            <li><i class="fa fa-tags" aria-hidden="true"></i>
                             <a href="#">{{ tag.name }}. </a>{% endfor %}</li>
 
 
@@ -193,8 +194,8 @@
     </script>
 
     <hr>
-{#    {% if user.is_authenticated %}#}
-        {% if request.session.username %}
+    {#    {% if user.is_authenticated %}#}
+    {% if request.session.username %}
         <div id="comment-area">
             <form
                     action="{% url 'comment:post_comment' article.id %}"
