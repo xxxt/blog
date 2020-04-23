@@ -2,7 +2,6 @@
 {% load static %}
 {% block content %}
 
-    <!DOCTYPE html>
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
@@ -118,6 +117,61 @@
     </div>
 
 
+{#评论区#}
+    <hr>
+    {#    {% if user.is_authenticated %}#}
+    {% if request.session.username %}
+        <div id="comment-area">
+            <form
+                    action="{% url 'comment:post_comment' article.id %}"
+                    method="POST"
+            >
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="body">
+                        <strong>
+                            我也要发言：
+                        </strong>
+                    </label>
+                    <textarea
+                            type="text"
+                            class="form-control"
+                            id="body"
+                            name="body"
+                            rows="2"></textarea>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary ">发送</button>
+            </form>
+        </div>
+        <br>
+    {% else %}
+        <br>
+        <h5 class="row justify-content-center">
+            请<a href="{% url 'blog:login' %}">登录</a>后回复
+            {#        评论已关闭#}
+        </h5>
+        <br>
+    {% endif %}
+
+
+
+    <!-- 显示评论 -->
+    <h4>共有{{ comments.count }}条评论</h4>
+    <div>
+        {% for comment in comments %}
+            <hr>
+            <p>
+                <strong style="color: pink">{{ comment.user }}</strong> 于
+                <span style="color: green">{{ comment.created|date:"Y-m-d H:i:s" }}</span> 时说：
+            </p>
+            <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
+        {% endfor %}
+    </div>
+
+
+
+
     <script src="{% static 'blog/scripts/csrf.js' %}"></script>
     <script>
         // 点赞功能主函数
@@ -176,6 +230,7 @@
             );
         };
 
+
         // 辅助点赞主函数，验证点赞状态
         function check_status(data, id) {
             // 尝试查询点赞状态
@@ -192,63 +247,6 @@
             ;
         };
     </script>
-
-    <hr>
-    {#    {% if user.is_authenticated %}#}
-    {% if request.session.username %}
-        <div id="comment-area">
-            <form
-                    action="{% url 'comment:post_comment' article.id %}"
-                    method="POST"
-            >
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="body">
-                        <strong>
-                            我也要发言：
-                        </strong>
-                    </label>
-                    <textarea
-                            type="text"
-                            class="form-control"
-                            id="body"
-                            name="body"
-                            rows="2"></textarea>
-                </div>
-                <!-- 提交按钮 -->
-                <button type="submit" class="btn btn-primary ">发送</button>
-            </form>
-        </div>
-        <br>
-    {% else %}
-        <br>
-        <h5 class="row justify-content-center">
-            请<a href="{% url 'blog:login' %}">登录</a>后回复
-            {#        评论已关闭#}
-        </h5>
-        <br>
-    {% endif %}
-
-
-
-    <!-- 显示评论 -->
-    <h4>共有{{ comments.count }}条评论</h4>
-    <div>
-        {% for comment in comments %}
-            <hr>
-            <p>
-                <strong style="color: pink">
-                    {{ comment.user }}
-                </strong> 于
-                <span style="color: green">
-                    {{ comment.created|date:"Y-m-d H:i:s" }}
-                </span> 时说：
-            </p>
-            <pre style="font-family: inherit; font-size: 1em;">
-{{ comment.body }}</pre>
-        {% endfor %}
-    </div>
-    </div>
 
 
 

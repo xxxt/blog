@@ -15,7 +15,7 @@ class BlogPostForm(forms.ModelForm):
     class Meta:
         model = Blog
         # fields = '__all__'
-        fields = ('title', 'body', 'tags')
+        fields = ('title', 'body')
 
 
 class MDEditorForm(forms.Form):
