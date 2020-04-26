@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'blog',
     'mdeditor',
     'comment',
+    # 'debug_toolbar',
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'blog.middlewares.check_login_middleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'HHblog.urls'
@@ -120,69 +122,127 @@ STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/uploads/'
+#
+# LOGGING = {
+#     'version': 1,
+#     # 是否禁用已经存在的日志器
+#     'disable_existing_loggers': False,
+#     # 日志格式化器
+#     'formatters': {
+#         'simple': {
+#             'format': '%(asctime)s %(module)s.%(funcName)s: %(message)s',
+#             'datefmt': '%Y-%m-%d %H:%M:%S',
+#         },
+#         'verbose': {
+#             'format': '%(asctime)s %(levelname)s [%(process)d-%(threadName)s] '
+#                       '%(module)s.%(funcName)s line %(lineno)d: %(message)s',
+#             'datefmt': '%Y-%m-%d %H:%M:%S',
+#         }
+#     },
+#     # 日志过滤器
+#     'filters': {
+#         # 只有在Django配置文件中DEBUG值为True时才起作用
+#         'require_debug_true': {
+#             '()': 'django.utils.log.RequireDebugTrue',
+#         },
+#     },
+#     # 日志处理器
+#     'handlers': {
+#         # 输出到控制台
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#             'level': 'DEBUG',
+#             'filters': ['require_debug_true'],
+#             'formatter': 'simple',
+#         },
+#         # 输出到文件(每周切割一次)
+#         'file1': {
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'filename': 'access.log',
+#             'when': 'W0',
+#             'backupCount': 12,
+#             'formatter': 'simple',
+#             'level': 'INFO',
+#         },
+#         # 输出到文件(每天切割一次)
+#         'file2': {
+#             'class': 'logging.handlers.TimedRotatingFileHandler',
+#             'filename': 'error.log',
+#             'when': 'D',
+#             'backupCount': 31,
+#             'formatter': 'verbose',
+#             'level': 'WARNING',
+#         },
+#     },
+#     # 日志器记录器
+#     'loggers': {
+#         'django.db.backends': {
+#             # 需要使用的日志处理器
+#             'handlers': ['console', 'file1', 'file2'],
+#             # 是否向上传播日志信息
+#             'propagate': True,
+#             # 日志级别(不一定是最终的日志级别)
+#             'level': 'DEBUG',
+#         },
+#     }
+# }
 
 LOGGING = {
     'version': 1,
-    # 是否禁用已经存在的日志器
     'disable_existing_loggers': False,
-    # 日志格式化器
     'formatters': {
-        'simple': {
-            'format': '%(asctime)s %(module)s.%(funcName)s: %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S',
-        },
         'verbose': {
-            'format': '%(asctime)s %(levelname)s [%(process)d-%(threadName)s] '
-                      '%(module)s.%(funcName)s line %(lineno)d: %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S',
-        }
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
     },
-    # 日志过滤器
     'filters': {
-        # 只有在Django配置文件中DEBUG值为True时才起作用
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
     },
-    # 日志处理器
     'handlers': {
-        # 输出到控制台
         'console': {
-            'class': 'logging.StreamHandler',
-            'level': 'DEBUG',
-            'filters': ['require_debug_true'],
-            'formatter': 'simple',
-        },
-        # 输出到文件(每周切割一次)
-        'file1': {
-            'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': 'access.log',
-            'when': 'W0',
-            'backupCount': 12,
-            'formatter': 'simple',
             'level': 'INFO',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
         },
-        # 输出到文件(每天切割一次)
         'file2': {
+            'level': 'ERROR',
             'class': 'logging.handlers.TimedRotatingFileHandler',
-            'filename': 'error.log',
-            'when': 'D',
-            'backupCount': 31,
+            'when': 'midnight',
+            'backupCount': 30,
+            'filename': os.path.join(BASE_DIR, 'error.log'),
             'formatter': 'verbose',
-            'level': 'WARNING',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'when': 'midnight',
+            'backupCount': 30,
+            'filename': os.path.join(BASE_DIR, 'access.log'),
+            'formatter': 'verbose',
         },
     },
-    # 日志器记录器
     'loggers': {
-        'django.db.backends': {
-            # 需要使用的日志处理器
-            'handlers': ['console', 'file1', 'file2'],
-            # 是否向上传播日志信息
+        'django': {
+            'handlers': ['console', 'file', 'file2'],
             'propagate': True,
-            # 日志级别(不一定是最终的日志级别)
-            'level': 'DEBUG',
         },
     }
 }
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+#
+# DEBUG_TOOLBAR_CONFIG = {
+#     # 引入jQuery库
+#     'JQUERY_URL': 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js',
+#     # 工具栏是否折叠
+#     'SHOW_COLLAPSED': True,
+#     # 是否显示工具栏
+#     'SHOW_TOOLBAR_CALLBACK': lambda x: True,
+# }

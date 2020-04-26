@@ -283,6 +283,5 @@ def about(request):
     return render(request, 'blog/about.html', context)
 
 # TODO
-#  add categroy in UI
 #  test
 #  cache
