@@ -2,6 +2,7 @@ _credentials.py
 /uploads/*
 /.idea
 /__pycache__
+/../__pycache__
 .DS_Store
 access.log
 error.log
