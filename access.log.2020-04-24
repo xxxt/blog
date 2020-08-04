@@ -1,0 +1,119 @@
+INFO 2020-04-24 15:19:24,362 autoreload 60131 4494396864 Watching for file changes with StatReloader
+INFO 2020-04-24 15:19:25,348 basehttp 60131 123145361813504 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:19:25,477 basehttp 60131 123145361813504 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:19:25,546 basehttp 60131 123145361813504 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:19:25,673 basehttp 60131 123145361813504 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:19:25,757 basehttp 60131 123145361813504 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:19:25,886 basehttp 60131 123145361813504 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:19:26,027 basehttp 60131 123145361813504 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:19:26,142 basehttp 60131 123145361813504 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:19:26,335 basehttp 60131 123145361813504 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:19:26,456 basehttp 60131 123145361813504 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:19:26,570 basehttp 60131 123145361813504 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:19:26,687 basehttp 60131 123145361813504 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:19:38,191 autoreload 60148 4581805504 Watching for file changes with StatReloader
+INFO 2020-04-24 15:20:32,301 autoreload 60148 4581805504 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:20:32,918 autoreload 60173 4696235456 Watching for file changes with StatReloader
+INFO 2020-04-24 15:20:49,951 autoreload 60173 4696235456 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:20:50,549 autoreload 60182 4587949504 Watching for file changes with StatReloader
+INFO 2020-04-24 15:21:00,919 autoreload 60182 4587949504 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:21:01,632 autoreload 60194 4695735744 Watching for file changes with StatReloader
+ERROR 2020-04-24 15:21:11,534 log 60194 123145519742976 Internal Server Error: /register/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/urls/base.py", line 72, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'djdt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/debug_toolbar/middleware.py", line 99, in __call__
+    bits[-2] += toolbar.render_toolbar()
+  File "/usr/local/lib/python3.7/site-packages/debug_toolbar/toolbar.py", line 69, in render_toolbar
+    return render_to_string("debug_toolbar/base.html", context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/test/utils.py", line 95, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 903, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/defaulttags.py", line 309, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 903, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/defaulttags.py", line 443, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/base.py", line 83, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'djdt' is not a registered namespace
+ERROR 2020-04-24 15:21:11,536 basehttp 60194 123145519742976 "GET /register/ HTTP/1.1" 500 134509
+INFO 2020-04-24 15:21:28,506 autoreload 60208 4408339904 Watching for file changes with StatReloader
+ERROR 2020-04-24 15:21:35,173 log 60208 123145377738752 Internal Server Error: /register/
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/urls/base.py", line 72, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+KeyError: 'djdt'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/usr/local/lib/python3.7/site-packages/debug_toolbar/middleware.py", line 99, in __call__
+    bits[-2] += toolbar.render_toolbar()
+  File "/usr/local/lib/python3.7/site-packages/debug_toolbar/toolbar.py", line 69, in render_toolbar
+    return render_to_string("debug_toolbar/base.html", context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "/usr/local/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/test/utils.py", line 95, in instrumented_test_render
+    return self.nodelist.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 903, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/defaulttags.py", line 309, in render
+    return nodelist.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 936, in render
+    bit = node.render_annotated(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/base.py", line 903, in render_annotated
+    return self.render(context)
+  File "/usr/local/lib/python3.7/site-packages/django/template/defaulttags.py", line 443, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/usr/local/lib/python3.7/site-packages/django/urls/base.py", line 83, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'djdt' is not a registered namespace
+ERROR 2020-04-24 15:21:35,175 basehttp 60208 123145377738752 "GET /register/ HTTP/1.1" 500 134352
+INFO 2020-04-24 15:21:44,517 autoreload 60208 4408339904 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:21:45,118 autoreload 60216 4697304512 Watching for file changes with StatReloader
+INFO 2020-04-24 15:22:09,743 autoreload 60216 4697304512 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:22:10,559 autoreload 60231 4479643072 Watching for file changes with StatReloader
+INFO 2020-04-24 15:22:17,762 autoreload 60231 4479643072 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:22:18,401 autoreload 60239 4551552448 Watching for file changes with StatReloader
+INFO 2020-04-24 15:22:23,352 autoreload 60239 4551552448 /Users/yangjinghui/PycharmProjects/HHblog/HHblog/settings/common.py changed, reloading.
+INFO 2020-04-24 15:22:23,911 autoreload 60245 4698783168 Watching for file changes with StatReloader
+INFO 2020-04-24 15:22:29,060 basehttp 60245 123145575161856 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:22:29,200 basehttp 60245 123145575161856 "GET /static/blog/images/favicon.png HTTP/1.1" 200 8472
+INFO 2020-04-24 15:22:30,169 basehttp 60245 123145575161856 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:22:30,655 basehttp 60245 123145575161856 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:22:31,435 basehttp 60245 123145575161856 "GET / HTTP/1.1" 200 13915
+INFO 2020-04-24 15:22:32,220 basehttp 60245 123145575161856 "GET /show_archives/ HTTP/1.1" 200 7913
+INFO 2020-04-24 15:22:33,665 basehttp 60245 123145575161856 "GET /show_tages/ HTTP/1.1" 200 7959
+INFO 2020-04-24 15:22:34,283 basehttp 60245 123145575161856 "GET /show_categories/ HTTP/1.1" 200 7969
+INFO 2020-04-24 15:22:52,928 autoreload 60245 4698783168 /Users/yangjinghui/PycharmProjects/HHblog/blog/views.py changed, reloading.
+INFO 2020-04-24 15:22:53,523 autoreload 60263 4589305280 Watching for file changes with StatReloader
+INFO 2020-04-24 15:36:48,628 basehttp 60263 123145404989440 "GET /register/ HTTP/1.1" 200 10046
+INFO 2020-04-24 17:17:25,927 autoreload 61949 4741852608 Watching for file changes with StatReloader
